@@ -13,9 +13,9 @@ Nginx (port 80) -> PHP-FPM (port 9000) -> MariaDB (port 3306)
 ## Instalation 
 ### Prérequis
 
--Docker
--Docker Compose
--Git
+- Docker
+- Docker Compose
+- Git
 
 ### Lancer l'environnement
 
