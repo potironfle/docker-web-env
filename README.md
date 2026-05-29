@@ -10,7 +10,7 @@ Déploiement d'un environnement web complet conteneurisé avec Docker, comprenan
 
 Nginx (port 80) -> PHP-FPM (port 9000) -> MariaDB (port 3306)
 
-## Instalation 
+## Installation 
 ### Prérequis
 
 - Docker
