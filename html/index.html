@@ -3,726 +3,647 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>POWERiti — Infrastructure Réseau</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>POWERiti — Réseau</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0a0e1a;
-    --bg2: #0f1524;
-    --bg3: #141929;
-    --accent: #00c8ff;
-    --accent2: #7b61ff;
-    --accent3: #00ff9d;
-    --warn: #ff6b35;
-    --text: #e2e8f0;
-    --text-dim: #64748b;
-    --border: rgba(0,200,255,0.15);
-    --card: rgba(15,21,36,0.8);
-  }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Syne', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: #f5f4f0;
+    color: #1a1a1a;
     min-height: 100vh;
-    overflow-x: hidden;
   }
 
-  /* Grid background */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(0,200,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,200,255,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* Glow blobs */
-  body::after {
-    content: '';
-    position: fixed;
-    top: -200px;
-    left: -200px;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(0,200,255,0.06) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .container {
-    position: relative;
-    z-index: 1;
-    max-width: 1200px;
-    margin: 0 auto;
+  /* NAV */
+  nav {
+    background: #1a1a1a;
     padding: 0 2rem;
-  }
-
-  /* HEADER */
-  header {
-    padding: 3rem 0 2rem;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 3rem;
-  }
-
-  .header-inner {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .logo-area {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .logo-icon {
-    width: 48px;
-    height: 48px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    box-shadow: 0 0 20px rgba(0,200,255,0.3);
-  }
-
-  .logo-text h1 {
-    font-size: 1.6rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .logo-text p {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--text-dim);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .status-badge {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(0,255,157,0.08);
-    border: 1px solid rgba(0,255,157,0.2);
-    padding: 0.4rem 1rem;
-    border-radius: 100px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--accent3);
-  }
-
-  .status-dot {
-    width: 6px;
-    height: 6px;
-    background: var(--accent3);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
-  }
-
-  /* SECTION TITLE */
-  .section-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--accent);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-  }
-
-  .section-title {
-    font-size: 1.8rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    margin-bottom: 2rem;
-  }
-
-  /* OVERVIEW CARDS */
-  .overview-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-bottom: 3rem;
-  }
-
-  .overview-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.5rem;
-    backdrop-filter: blur(10px);
-    transition: border-color 0.3s, transform 0.3s;
-    animation: fadeUp 0.6s ease both;
-  }
-
-  .overview-card:hover {
-    border-color: rgba(0,200,255,0.4);
-    transform: translateY(-2px);
-  }
-
-  .overview-card:nth-child(1) { animation-delay: 0.1s; }
-  .overview-card:nth-child(2) { animation-delay: 0.2s; }
-  .overview-card:nth-child(3) { animation-delay: 0.3s; }
-  .overview-card:nth-child(4) { animation-delay: 0.4s; }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .card-icon {
-    font-size: 1.5rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .card-value {
-    font-size: 1.8rem;
-    font-weight: 800;
-    color: var(--accent);
-    line-height: 1;
-    margin-bottom: 0.25rem;
-  }
-
-  .card-label {
-    font-size: 0.8rem;
-    color: var(--text-dim);
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  /* BAIES GRID */
-  .baies-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin-bottom: 3rem;
-  }
-
-  @media (max-width: 768px) {
-    .baies-grid { grid-template-columns: 1fr; }
-  }
-
-  .baie-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    overflow: hidden;
-    backdrop-filter: blur(10px);
-    animation: fadeUp 0.6s ease both;
-  }
-
-  .baie-card:nth-child(1) { animation-delay: 0.2s; }
-  .baie-card:nth-child(2) { animation-delay: 0.4s; }
-
-  .baie-header {
-    padding: 1.25rem 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .baie-1 .baie-header { background: linear-gradient(90deg, rgba(0,200,255,0.1), transparent); }
-  .baie-2 .baie-header { background: linear-gradient(90deg, rgba(123,97,255,0.1), transparent); }
-
-  .baie-title {
-    font-size: 1rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .baie-1 .baie-title { color: var(--accent); }
-  .baie-2 .baie-title { color: var(--accent2); }
-
-  .baie-subtitle {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  .baie-body { padding: 1rem 1.5rem 1.5rem; }
-
-  /* EQUIPMENT LIST */
-  .equip-list { list-style: none; }
-
-  .equip-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    transition: background 0.2s;
-  }
-
-  .equip-item:last-child { border-bottom: none; }
-
-  .equip-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin-top: 5px;
-    flex-shrink: 0;
-  }
-
-  .dot-network { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
-  .dot-security { background: var(--warn); box-shadow: 0 0 6px var(--warn); }
-  .dot-storage { background: var(--accent2); box-shadow: 0 0 6px var(--accent2); }
-  .dot-power { background: var(--accent3); box-shadow: 0 0 6px var(--accent3); }
-  .dot-service { background: #a78bfa; box-shadow: 0 0 6px #a78bfa; }
-
-  .equip-info { flex: 1; }
-
-  .equip-name {
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 0.15rem;
-  }
-
-  .equip-desc {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--text-dim);
-  }
-
-  .equip-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    background: rgba(255,255,255,0.05);
-    color: var(--text-dim);
-    white-space: nowrap;
-    align-self: center;
-  }
-
-  /* TOPOLOGY */
-  .topology-section {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 2rem;
-    margin-bottom: 3rem;
-    backdrop-filter: blur(10px);
-    animation: fadeUp 0.6s ease 0.3s both;
-  }
-
-  .topology-flow {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
     gap: 0;
-    margin-top: 1.5rem;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
+    height: 52px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
 
-  .flow-node {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 0.6rem 1rem;
-    text-align: center;
-    min-width: 120px;
-    transition: border-color 0.3s, transform 0.3s;
+  .nav-brand {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fff;
+    margin-right: 2rem;
+    letter-spacing: 0.05em;
   }
 
-  .flow-node:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-  }
+  .nav-brand span { color: #f0a500; }
 
-  .flow-node-name {
-    font-size: 0.8rem;
-    font-weight: 700;
-    margin-bottom: 0.2rem;
-  }
-
-  .flow-node-desc {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--text-dim);
-  }
-
-  .flow-arrow {
-    color: var(--accent);
-    font-size: 1.2rem;
-    padding: 0 0.25rem;
-    flex-shrink: 0;
-  }
-
-  .flow-arrow.fiber {
-    color: var(--accent2);
-  }
-
-  /* LEGEND */
-  .legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border);
-  }
-
-  .legend-item {
+  nav a {
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--text-dim);
+    padding: 0 1.25rem;
+    height: 100%;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #888;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
   }
 
-  .legend-dot {
-    width: 8px;
-    height: 8px;
+  nav a:hover { color: #fff; }
+  nav a.active { color: #fff; border-bottom-color: #f0a500; }
+
+  /* HEADER */
+  .page-header {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 3rem 2rem 2.5rem;
+    border-bottom: 3px solid #f0a500;
+  }
+
+  .page-header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+  }
+
+  .page-header p {
+    color: #888;
+    font-size: 0.9rem;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: #4ade80;
+  }
+
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    background: #4ade80;
     border-radius: 50%;
+    animation: blink 2s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* MAIN */
+  main {
+    max-width: 1100px;
+    margin: 2.5rem auto;
+    padding: 0 2rem;
+  }
+
+  /* STATS */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: #ddd;
+    border: 1px solid #ddd;
+    margin-bottom: 2.5rem;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .stat {
+    background: #fff;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .stat-value {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: #888;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* SECTION */
+  .section-title {
+    font-size: 0.7rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #ddd;
+  }
+
+  /* FLUX */
+  .flux-box {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .flux {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .flux-node {
+    background: #f5f4f0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0.5rem 0.9rem;
+    text-align: center;
+  }
+
+  .flux-node-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  .flux-node-desc {
+    font-size: 0.68rem;
+    color: #888;
+    font-family: 'IBM Plex Mono', monospace;
+    margin-top: 0.1rem;
+  }
+
+  .flux-arrow {
+    color: #bbb;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .flux-arrow.fibre { color: #f0a500; }
+
+  .flux-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: #888;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .flux-note::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 2px;
+    background: #f0a500;
+  }
+
+  /* BAIES */
+  .baies {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  @media (max-width: 700px) { .baies { grid-template-columns: 1fr; } }
+
+  .baie {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .baie-head {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .baie-head h2 {
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .baie-head span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    color: #888;
+  }
+
+  .baie-1 .baie-head { border-top: 3px solid #2563eb; }
+  .baie-2 .baie-head { border-top: 3px solid #f0a500; }
+
+  /* ÉQUIPEMENTS */
+  .equip {
+    list-style: none;
+  }
+
+  .equip li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 1.25rem;
+    border-bottom: 1px solid #f0efeb;
+    font-size: 0.85rem;
+  }
+
+  .equip li:last-child { border-bottom: none; }
+
+  .equip-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dot-net { background: #2563eb; }
+  .dot-sec { background: #ef4444; }
+  .dot-sto { background: #f0a500; }
+  .dot-ups { background: #4ade80; }
+  .dot-srv { background: #8b5cf6; }
+
+  .equip-name { flex: 1; font-weight: 500; }
+
+  .equip-desc {
+    font-size: 0.72rem;
+    color: #888;
+    font-family: 'IBM Plex Mono', monospace;
+    display: block;
+    margin-top: 0.1rem;
+    font-weight: 400;
+  }
+
+  .equip-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: #888;
+    background: #f5f4f0;
+    border: 1px solid #e5e5e5;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  /* LÉGENDE */
+  .legende {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .legende-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.75rem;
+  }
+
+  .legende-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: #555;
   }
 
   /* FOOTER */
   footer {
-    border-top: 1px solid var(--border);
-    padding: 2rem 0;
-    margin-top: 2rem;
+    border-top: 1px solid #ddd;
+    padding: 1.5rem 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: gap;
+    flex-wrap: wrap;
     gap: 1rem;
+    max-width: 1100px;
+    margin: 0 auto;
   }
 
   .footer-text {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--text-dim);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: #aaa;
   }
 
-  .footer-stack {
+  .stack {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.4rem;
   }
 
-  .stack-tag {
-    font-family: 'JetBrains Mono', monospace;
+  .stack span {
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 0.65rem;
-    padding: 0.25rem 0.6rem;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    color: var(--text-dim);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    color: #888;
   }
-
-  .stack-tag.nginx { border-color: rgba(0,200,255,0.3); color: var(--accent); }
-  .stack-tag.php { border-color: rgba(123,97,255,0.3); color: var(--accent2); }
-  .stack-tag.docker { border-color: rgba(0,255,157,0.3); color: var(--accent3); }
 </style>
 </head>
 <body>
 
-<div class="container">
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-brand">POWER<span>iti</span></div>
+  <a href="index.html" class="active">🏠 Réseau</a>
+  <a href="index.php">⚙️ PHP Info</a>
+  <a href="db.php">🗄️ Base de données</a>
+</nav>
 
-  <!-- HEADER -->
-  <header>
-    <div class="header-inner">
-      <div class="logo-area">
-        <div class="logo-icon">⚡</div>
-        <div class="logo-text">
-          <h1>POWERiti</h1>
-          <p>Documentation Infrastructure Réseau</p>
-        </div>
-      </div>
-      <div class="status-badge">
-        <div class="status-dot"></div>
-        Réseau opérationnel
-      </div>
+<!-- EN-TÊTE -->
+<div class="page-header">
+  <div class="header-inner">
+    <div>
+      <h1>Infrastructure Réseau</h1>
+      <p>Documentation interne — Baie 1 &amp; Baie 2</p>
     </div>
-  </header>
+    <div class="status">
+      <div class="status-dot"></div>
+      Réseau opérationnel
+    </div>
+  </div>
+</div>
 
-  <!-- OVERVIEW -->
-  <div class="section-label">Vue d'ensemble</div>
-  <h2 class="section-title">Infrastructure en chiffres</h2>
+<main>
 
-  <div class="overview-grid">
-    <div class="overview-card">
-      <div class="card-icon">🏗️</div>
-      <div class="card-value">2</div>
-      <div class="card-label">Baies réseau</div>
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-value">2</div>
+      <div class="stat-label">Baies réseau</div>
     </div>
-    <div class="overview-card">
-      <div class="card-icon">🔀</div>
-      <div class="card-value">3</div>
-      <div class="card-label">Switches managés</div>
+    <div class="stat">
+      <div class="stat-value">3</div>
+      <div class="stat-label">Switches managés</div>
     </div>
-    <div class="overview-card">
-      <div class="card-icon">🐳</div>
-      <div class="card-value">3</div>
-      <div class="card-label">Conteneurs Docker</div>
+    <div class="stat">
+      <div class="stat-value">1</div>
+      <div class="stat-label">Firewall FortiGate</div>
     </div>
-    <div class="overview-card">
-      <div class="card-icon">🔒</div>
-      <div class="card-value">1</div>
-      <div class="card-label">Firewall UTM/VPN</div>
+    <div class="stat">
+      <div class="stat-value">3</div>
+      <div class="stat-label">Conteneurs Docker</div>
     </div>
   </div>
 
   <!-- FLUX RÉSEAU -->
-  <div class="topology-section">
-    <div class="section-label">Topologie</div>
-    <h2 class="section-title" style="margin-bottom:0">Flux réseau principal</h2>
-
-    <div class="topology-flow">
-      <div class="flow-node">
-        <div class="flow-node-name">Box FAI</div>
-        <div class="flow-node-desc">WAN / Internet</div>
+  <p class="section-title">Flux réseau principal</p>
+  <div class="flux-box">
+    <div class="flux">
+      <div class="flux-node">
+        <div class="flux-node-name">Box FAI</div>
+        <div class="flux-node-desc">WAN</div>
       </div>
-      <span class="flow-arrow">→</span>
-      <div class="flow-node">
-        <div class="flow-node-name">Patch Panels</div>
-        <div class="flow-node-desc">PB01 / PB02</div>
+      <span class="flux-arrow">→</span>
+      <div class="flux-node">
+        <div class="flux-node-name">Patch Panels</div>
+        <div class="flux-node-desc">PB01/PB02</div>
       </div>
-      <span class="flow-arrow">→</span>
-      <div class="flow-node">
-        <div class="flow-node-name">ECS1528P</div>
-        <div class="flow-node-desc">Switch cœur 28p</div>
+      <span class="flux-arrow">→</span>
+      <div class="flux-node">
+        <div class="flux-node-name">ECS1528P</div>
+        <div class="flux-node-desc">Switch cœur 28p</div>
       </div>
-      <span class="flow-arrow">→</span>
-      <div class="flow-node">
-        <div class="flow-node-name">FortiGate</div>
-        <div class="flow-node-desc">Firewall UTM/VPN</div>
+      <span class="flux-arrow">→</span>
+      <div class="flux-node">
+        <div class="flux-node-name">ECS5512FP</div>
+        <div class="flux-node-desc">Switch 12p PoE++</div>
       </div>
-      <span class="flow-arrow fiber">⇢</span>
-      <div class="flow-node">
-        <div class="flow-node-name">Switch B2</div>
-        <div class="flow-node-desc">Distribution baie 2</div>
+      <span class="flux-arrow">→</span>
+      <div class="flux-node">
+        <div class="flux-node-name">FortiGate</div>
+        <div class="flux-node-desc">Firewall UTM/VPN</div>
       </div>
-      <span class="flow-arrow">→</span>
-      <div class="flow-node">
-        <div class="flow-node-name">Serveur Docker</div>
-        <div class="flow-node-desc">Nginx · PHP · MariaDB</div>
+      <span class="flux-arrow fibre">⇢</span>
+      <div class="flux-node">
+        <div class="flux-node-name">Switch B2</div>
+        <div class="flux-node-desc">Distribution baie 2</div>
+      </div>
+      <span class="flux-arrow">→</span>
+      <div class="flux-node">
+        <div class="flux-node-name">Serveur Docker</div>
+        <div class="flux-node-desc">Nginx · PHP · MariaDB</div>
       </div>
     </div>
-
-    <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div> Lien cuivre</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--accent2)"></div> Lien fibre optique inter-baies</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--warn)"></div> Sécurité / Contrôle d'accès</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--accent3)"></div> Alimentation secourue UPS</div>
-    </div>
+    <p class="flux-note">Lien inter-baies via fibre optique SFP</p>
   </div>
 
   <!-- BAIES -->
-  <div class="section-label">Équipements</div>
-  <h2 class="section-title">Détail des baies</h2>
-
-  <div class="baies-grid">
+  <p class="section-title">Équipements par baie</p>
+  <div class="baies">
 
     <!-- BAIE 1 -->
-    <div class="baie-card baie-1">
-      <div class="baie-header">
-        <div>
-          <div class="baie-title">⚙️ Baie 1</div>
-          <div class="baie-subtitle">Réseau principal</div>
-        </div>
+    <div class="baie baie-1">
+      <div class="baie-head">
+        <h2>⚙️ Baie 1</h2>
+        <span>Réseau principal</span>
       </div>
-      <div class="baie-body">
-        <ul class="equip-list">
-          <li class="equip-item">
-            <div class="equip-dot dot-network"></div>
-            <div class="equip-info">
-              <div class="equip-name">Box FAI</div>
-              <div class="equip-desc">WAN — Accès Internet</div>
-            </div>
-            <span class="equip-tag">WAN</span>
-          </li>
-          <li class="equip-item">
-            <div class="equip-dot dot-network"></div>
-            <div class="equip-info">
-              <div class="equip-name">Patch Panels PB01/PB02</div>
-              <div class="equip-desc">Brassage câblage — 2×24 ports</div>
-            </div>
-            <span class="equip-tag">L1</span>
-          </li>
-          <li class="equip-item">
-            <div class="equip-dot dot-network"></div>
-            <div class="equip-info">
-              <div class="equip-name">EnGenius ECS1528P</div>
-              <div class="equip-desc">Switch PoE+ 28 ports — cœur réseau</div>
-            </div>
-            <span class="equip-tag">L2/L3</span>
-          </li>
-          <li class="equip-item">
-            <div class="equip-dot dot-network"></div>
-            <div class="equip-info">
-              <div class="equip-name">EnGenius ECS5512FP</div>
-              <div class="equip-desc">Switch PoE++ 12 ports — caméras/APs</div>
-            </div>
-            <span class="equip-tag">PoE++</span>
-          </li>
-          <li class="equip-item">
-            <div class="equip-dot dot-network"></div>
-            <div class="equip-info">
-              <div class="equip-name">Switch POWERiti</div>
-              <div class="equip-desc">Distribution postes utilisateurs</div>
-            </div>
-            <span class="equip-tag">Access</span>
-          </li>
-          <li class="equip-item">
-            <div class="equip-dot dot-security"></div>
-            <div class="equip-info">
-              <div class="equip-name">Fortinet FortiGate</div>
-              <div class="equip-desc">Firewall UTM / Routeur / VPN</div>
-            </div>
-            <span class="equip-tag">Sécu</span>
-          </li>
-          <li class="equip-item">
-            <div class="equip-dot dot-security"></div>
-            <div class="equip-info">
-              <div class="equip-name">Dahua NVR</div>
-              <div class="equip-desc">Vidéosurveillance</div>
-            </div>
-            <span class="equip-tag">CCTV</span>
-          </li>
-          <li class="equip-item">
-            <div class="equip-dot dot-security"></div>
-            <div class="equip-info">
-              <div class="equip-name">Ajax Hub</div>
-              <div class="equip-desc">Centrale alarme</div>
-            </div>
-            <span class="equip-tag">Alarme</span>
-          </li>
-          <li class="equip-item">
-            <div class="equip-dot dot-security"></div>
-            <div class="equip-info">
-              <div class="equip-name">Dahua Accès / Ventouse C3</div>
-              <div class="equip-desc">Contrôle de porte / Porte magnétique</div>
-            </div>
-            <span class="equip-tag">Accès</span>
-          </li>
-          <li class="equip-item">
-            <div class="equip-dot dot-power"></div>
-            <div class="equip-info">
-              <div class="equip-name">UPS Elite — Baie 1</div>
-              <div class="equip-desc">Alimentation secourue</div>
-            </div>
-            <span class="equip-tag">UPS</span>
-          </li>
-        </ul>
-      </div>
+      <ul class="equip">
+        <li>
+          <div class="equip-dot dot-net"></div>
+          <div class="equip-name">Box FAI
+            <span class="equip-desc">WAN — Accès Internet</span>
+          </div>
+          <span class="equip-tag">WAN</span>
+        </li>
+        <li>
+          <div class="equip-dot dot-net"></div>
+          <div class="equip-name">Patch Panels PB01/PB02
+            <span class="equip-desc">Brassage câblage — 2×24 ports</span>
+          </div>
+          <span class="equip-tag">L1</span>
+        </li>
+        <li>
+          <div class="equip-dot dot-net"></div>
+          <div class="equip-name">EnGenius ECS1528P
+            <span class="equip-desc">Switch PoE+ 28 ports — cœur réseau</span>
+          </div>
+          <span class="equip-tag">L2/L3</span>
+        </li>
+        <li>
+          <div class="equip-dot dot-net"></div>
+          <div class="equip-name">EnGenius ECS5512FP
+            <span class="equip-desc">Switch PoE++ 12 ports — caméras/APs</span>
+          </div>
+          <span class="equip-tag">PoE++</span>
+        </li>
+        <li>
+          <div class="equip-dot dot-net"></div>
+          <div class="equip-name">Switch POWERiti
+            <span class="equip-desc">Distribution postes utilisateurs</span>
+          </div>
+          <span class="equip-tag">Access</span>
+        </li>
+        <li>
+          <div class="equip-dot dot-sec"></div>
+          <div class="equip-name">Fortinet FortiGate
+            <span class="equip-desc">Firewall UTM / Routeur / VPN</span>
+          </div>
+          <span class="equip-tag">Sécu</span>
+        </li>
+        <li>
+          <div class="equip-dot dot-sec"></div>
+          <div class="equip-name">Dahua NVR
+            <span class="equip-desc">Vidéosurveillance</span>
+          </div>
+          <span class="equip-tag">CCTV</span>
+        </li>
+        <li>
+          <div class="equip-dot dot-sec"></div>
+          <div class="equip-name">Ajax Hub
+            <span class="equip-desc">Centrale alarme</span>
+          </div>
+          <span class="equip-tag">Alarme</span>
+        </li>
+        <li>
+          <div class="equip-dot dot-sec"></div>
+          <div class="equip-name">Dahua Accès / Ventouse C3
+            <span class="equip-desc">Contrôle de porte / Porte magnétique</span>
+          </div>
+          <span class="equip-tag">Accès</span>
+        </li>
+        <li>
+          <div class="equip-dot dot-ups"></div>
+          <div class="equip-name">UPS Elite — Baie 1
+            <span class="equip-desc">Alimentation secourue</span>
+          </div>
+          <span class="equip-tag">UPS</span>
+        </li>
+      </ul>
     </div>
 
     <!-- BAIE 2 -->
-    <div class="baie-card baie-2">
-      <div class="baie-header">
-        <div>
-          <div class="baie-title">🗄️ Baie 2</div>
-          <div class="baie-subtitle">Stockage & Services</div>
-        </div>
+    <div class="baie baie-2">
+      <div class="baie-head">
+        <h2>🗄️ Baie 2</h2>
+        <span>Stockage &amp; Services</span>
       </div>
-      <div class="baie-body">
-        <ul class="equip-list">
-          <li class="equip-item">
-            <div class="equip-dot dot-network"></div>
-            <div class="equip-info">
-              <div class="equip-name">Module fibre SFP</div>
-              <div class="equip-desc">Lien inter-baies (fibre optique)</div>
-            </div>
-            <span class="equip-tag">Fibre</span>
-          </li>
-          <li class="equip-item">
-            <div class="equip-dot dot-network"></div>
-            <div class="equip-info">
-              <div class="equip-name">Switch de distribution B2</div>
-              <div class="equip-desc">Interconnexion interne baie 2</div>
-            </div>
-            <span class="equip-tag">L2</span>
-          </li>
-          <li class="equip-item">
-            <div class="equip-dot dot-network"></div>
-            <div class="equip-info">
-              <div class="equip-name">Media Converter</div>
-              <div class="equip-desc">Fibre → RJ45 (Better Fiber)</div>
-            </div>
-            <span class="equip-tag">Conv.</span>
-          </li>
-          <li class="equip-item">
-            <div class="equip-dot dot-storage"></div>
-            <div class="equip-info">
-              <div class="equip-name">NAS (Stockage réseau)</div>
-              <div class="equip-desc">Baie disques — données & sauvegardes</div>
-            </div>
-            <span class="equip-tag">NAS</span>
-          </li>
-          <li class="equip-item">
-            <div class="equip-dot dot-service"></div>
-            <div class="equip-info">
-              <div class="equip-name">Serveur Docker / Services</div>
-              <div class="equip-desc">Conteneurs web — Nginx · PHP · MariaDB</div>
-            </div>
-            <span class="equip-tag">Docker</span>
-          </li>
-          <li class="equip-item">
-            <div class="equip-dot dot-service"></div>
-            <div class="equip-info">
-              <div class="equip-name">Équipement auxiliaire</div>
-              <div class="equip-desc">Raspberry Pi / Mini PC</div>
-            </div>
-            <span class="equip-tag">Aux</span>
-          </li>
-          <li class="equip-item">
-            <div class="equip-dot dot-network"></div>
-            <div class="equip-info">
-              <div class="equip-name">Patch Panel B2</div>
-              <div class="equip-desc">Brassage câblage baie 2</div>
-            </div>
-            <span class="equip-tag">L1</span>
-          </li>
-          <li class="equip-item">
-            <div class="equip-dot dot-power"></div>
-            <div class="equip-info">
-              <div class="equip-name">UPS Elite — Baie 2</div>
-              <div class="equip-desc">Alimentation secourue</div>
-            </div>
-            <span class="equip-tag">UPS</span>
-          </li>
-        </ul>
-      </div>
+      <ul class="equip">
+        <li>
+          <div class="equip-dot dot-net"></div>
+          <div class="equip-name">Module fibre SFP
+            <span class="equip-desc">Lien inter-baies (fibre optique)</span>
+          </div>
+          <span class="equip-tag">Fibre</span>
+        </li>
+        <li>
+          <div class="equip-dot dot-net"></div>
+          <div class="equip-name">Switch de distribution B2
+            <span class="equip-desc">Interconnexion interne baie 2</span>
+          </div>
+          <span class="equip-tag">L2</span>
+        </li>
+        <li>
+          <div class="equip-dot dot-net"></div>
+          <div class="equip-name">Media Converter
+            <span class="equip-desc">Fibre → RJ45 (Better Fiber)</span>
+          </div>
+          <span class="equip-tag">Conv.</span>
+        </li>
+        <li>
+          <div class="equip-dot dot-sto"></div>
+          <div class="equip-name">NAS (Stockage réseau)
+            <span class="equip-desc">Baie disques — données &amp; sauvegardes</span>
+          </div>
+          <span class="equip-tag">NAS</span>
+        </li>
+        <li>
+          <div class="equip-dot dot-srv"></div>
+          <div class="equip-name">Serveur Docker / Services
+            <span class="equip-desc">Conteneurs — Nginx · PHP · MariaDB</span>
+          </div>
+          <span class="equip-tag">Docker</span>
+        </li>
+        <li>
+          <div class="equip-dot dot-srv"></div>
+          <div class="equip-name">Équipement auxiliaire
+            <span class="equip-desc">Raspberry Pi / Mini PC</span>
+          </div>
+          <span class="equip-tag">Aux</span>
+        </li>
+        <li>
+          <div class="equip-dot dot-net"></div>
+          <div class="equip-name">Patch Panel B2
+            <span class="equip-desc">Brassage câblage baie 2</span>
+          </div>
+          <span class="equip-tag">L1</span>
+        </li>
+        <li>
+          <div class="equip-dot dot-ups"></div>
+          <div class="equip-name">UPS Elite — Baie 2
+            <span class="equip-desc">Alimentation secourue</span>
+          </div>
+          <span class="equip-tag">UPS</span>
+        </li>
+      </ul>
     </div>
 
   </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-text">POWERiti — Documentation réseau interne · Usage confidentiel</div>
-    <div class="footer-stack">
-      <span class="stack-tag nginx">Nginx</span>
-      <span class="stack-tag php">PHP-FPM</span>
-      <span class="stack-tag docker">Docker</span>
+  <!-- LÉGENDE -->
+  <p class="section-title">Légende</p>
+  <div class="legende">
+    <div class="legende-grid">
+      <div class="legende-item"><div class="equip-dot dot-net"></div> Réseau / Commutation</div>
+      <div class="legende-item"><div class="equip-dot dot-sec"></div> Sécurité / Contrôle d'accès</div>
+      <div class="legende-item"><div class="equip-dot dot-sto"></div> Stockage</div>
+      <div class="legende-item"><div class="equip-dot dot-srv"></div> Services / Docker</div>
+      <div class="legende-item"><div class="equip-dot dot-ups"></div> Alimentation secourue</div>
     </div>
-  </footer>
+  </div>
 
-</div>
+</main>
+
+<footer>
+  <span class="footer-text">POWERiti — Documentation réseau interne · Usage confidentiel</span>
+  <div class="stack">
+    <span>Nginx</span>
+    <span>PHP-FPM</span>
+    <span>MariaDB</span>
+    <span>Docker</span>
+  </div>
+</footer>
+
 </body>
 </html>
