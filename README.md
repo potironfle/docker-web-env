@@ -10,7 +10,7 @@ Déploiement d'un environnement web complet conteneurisé avec Docker, comprenan
 
 Nginx (port 80) -> PHP-FPM (port 9000) -> MariaDB (port 3306)
 
-## Instalation 
+## Installation 
 ### Prérequis
 
 - Docker
@@ -22,6 +22,6 @@ Nginx (port 80) -> PHP-FPM (port 9000) -> MariaDB (port 3306)
 ```bash
 git clone https://github.com/potironfle/docker-web-env.git
 cd docker-web-env
-docker compose up -d
+docker compose up -d --build
 ```
 L'environnement est accessible sur http://localhost
