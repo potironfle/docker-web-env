@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POWERiti — Équipe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #1a1a1a;
+      --bg2:        #222222;
+      --bg3:        #2a2a2a;
+      --surface:    #f5f4f0;
+      --border:     #333333;
+      --border-l:   #d4d1c8;
+      --text-dark:  #1a1917;
+      --text-light: #e8e6e0;
+      --muted:      #888884;
+      --accent:     #e8a020;
+      --white:      #ffffff;
+
+      --dir-border: #b0aee8;
+      --tech-border:#5dcaa5;
+      --mkt-border: #f0997b;
+      --algo-border:#ef9f27;
+      --support-border:#b4b2a9;
+      --stage-border:#85b7eb;
+
+      --dir-bg:     #eeeef8;
+      --tech-bg:    #e1f5ee;
+      --mkt-bg:     #faece7;
+      --algo-bg:    #faeeda;
+      --support-bg: #f1efe8;
+      --stage-bg:   #e6f1fb;
+
+      --dir-text:   #3b3a8c;
+      --tech-text:  #0f6e56;
+      --mkt-text:   #99360f;
+      --algo-text:  #7a5200;
+      --support-text:#4a4845;
+      --stage-text: #185fa5;
+    }
+
+    body {
+      font-family: 'Space Mono', monospace;
+      background: var(--surface);
+      color: var(--text-dark);
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--bg);
+      padding: 0 40px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      border-bottom: 2px solid var(--accent);
+    }
+    .nav-brand {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-light);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+      flex-shrink: 0;
+    }
+    .nav-brand span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 2px;
+    }
+    .nav-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+      position: relative;
+      top: 1px;
+    }
+    .nav-links a:hover { color: var(--text-light); }
+    .nav-links a.active { color: var(--white); border-bottom-color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      background: var(--bg);
+      padding: 48px 40px 40px;
+      border-bottom: 1px solid var(--accent);
+    }
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+    .hero p {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 400;
+      letter-spacing: 0.3px;
+    }
+
+    /* MAIN */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 40px 80px;
+    }
+
+    /* SECTION LABEL */
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 40px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-l);
+    }
+
+    /* CARDS */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border-l);
+      border-radius: 6px;
+      padding: 18px 20px 16px;
+      transition: box-shadow 0.15s, transform 0.15s;
+    }
+    .card:hover {
+      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+      transform: translateY(-1px);
+    }
+    .card-role {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .card-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+      letter-spacing: -0.3px;
+    }
+    .card-desc {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    /* color variants */
+    .c-dir     { border-top: 3px solid var(--dir-border);     background: var(--dir-bg); }
+    .c-dir     .card-role { color: var(--dir-text); }
+
+    .c-tech    { border-top: 3px solid var(--tech-border);    background: var(--tech-bg); }
+    .c-tech    .card-role { color: var(--tech-text); }
+
+    .c-mkt     { border-top: 3px solid var(--mkt-border);     background: var(--mkt-bg); }
+    .c-mkt     .card-role { color: var(--mkt-text); }
+
+    .c-algo    { border-top: 3px solid var(--algo-border);    background: var(--algo-bg); }
+    .c-algo    .card-role { color: var(--algo-text); }
+
+    .c-support { border-top: 3px solid var(--support-border); background: var(--support-bg); }
+    .c-support .card-role { color: var(--support-text); }
+
+    .c-stage   { border-top: 3px solid var(--stage-border);   background: var(--stage-bg); }
+    .c-stage   .card-role { color: var(--stage-text); }
+
+    /* LEGENDE */
+    .legende {
+      margin-top: 44px;
+      border: 1px solid var(--border-l);
+      border-radius: 6px;
+      background: var(--white);
+      padding: 20px 24px;
+    }
+    .legende-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .legende-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 8px 24px;
+    }
+    .legende-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .legende-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legende-item strong { color: var(--text-dark); font-weight: 700; }
+
+    /* FOOTER */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 20px 40px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      font-family: 'Space Mono', monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-brand" href="/index.html">POWER<span>iti</span></a>
+    <div class="nav-links">
+      <a href="/index.html">Réseau</a>
+      <a href="/equipe.html" class="active">Équipe</a>
+      <a href="/index.php">PHP Info</a>
+      <a href="/db.php">Base de données</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <h1>Équipe POWERiti</h1>
+    <p>MSP — Services d'infogérance informatique &nbsp;·&nbsp; 10 personnes</p>
+  </div>
+
+  <main>
+
+    <!-- DIRECTION -->
+    <div class="section-label">Direction</div>
+    <div class="cards">
+      <div class="card c-dir">
+        <div class="card-role">CEO &amp; Fondateur</div>
+        <div class="card-name">Jantien</div>
+        <div class="card-desc">Pilotage stratégique et financier de l'entreprise</div>
+      </div>
+      <div class="card c-dir">
+        <div class="card-role">Dir. Administratif &amp; Financier</div>
+        <div class="card-name">Antoine</div>
+        <div class="card-desc">Direction administrative, financière et RH</div>
+      </div>
+      <div class="card c-support">
+        <div class="card-role">Assistante de direction</div>
+        <div class="card-name">Woifa</div>
+        <div class="card-desc">Coordination et assistance de direction</div>
+      </div>
+    </div>
+
+    <!-- PÔLE TECHNIQUE -->
+    <div class="section-label">Pôle technique</div>
+    <div class="cards">
+      <div class="card c-tech">
+        <div class="card-role">Directeur Technique</div>
+        <div class="card-name">Adrien</div>
+        <div class="card-desc">Infrastructure et infogérance — encadrement équipe tech</div>
+      </div>
+      <div class="card c-tech">
+        <div class="card-role">Technicien informatique</div>
+        <div class="card-name">Alexandre</div>
+        <div class="card-desc">Support, maintenance et déploiement réseau</div>
+      </div>
+      <div class="card c-tech">
+        <div class="card-role">Technicien informatique</div>
+        <div class="card-name">Guillaume</div>
+        <div class="card-desc">Support, maintenance et déploiement réseau</div>
+      </div>
+      <div class="card c-tech">
+        <div class="card-role">Technicien informatique</div>
+        <div class="card-name">Kevin</div>
+        <div class="card-desc">Support, maintenance et déploiement réseau</div>
+      </div>
+      <div class="card c-tech">
+        <div class="card-role">Technicien informatique</div>
+        <div class="card-name">Kevin</div>
+        <div class="card-desc">Support, maintenance et déploiement réseau</div>
+      </div>
+      <div class="card c-tech">
+        <div class="card-role">Technicien informatique</div>
+        <div class="card-name">Damian</div>
+        <div class="card-desc">Support, maintenance et déploiement réseau</div>
+      </div>
+    </div>
+
+    <!-- MARKETING -->
+    <div class="section-label">Marketing &amp; Communication</div>
+    <div class="cards">
+      <div class="card c-mkt">
+        <div class="card-role">Cheffe Marketing &amp; Com.</div>
+        <div class="card-name">Diana</div>
+        <div class="card-desc">Communication et développement commercial</div>
+      </div>
+    </div>
+
+    <!-- ALGORITHMES -->
+    <div class="section-label">Algorithmes &amp; Développement</div>
+    <div class="cards">
+      <div class="card c-algo">
+        <div class="card-role">Ingénieur Algorithmes</div>
+        <div class="card-name">Sébastien</div>
+        <div class="card-desc">Développement logiciel et optimisation algorithmique</div>
+      </div>
+    </div>
+
+    <!-- STAGE -->
+    <div class="section-label">Stagiaire</div>
+    <div class="cards">
+      <div class="card c-stage">
+        <div class="card-role">BTS SIO SISR — 1re année</div>
+        <div class="card-name">Moi</div>
+        <div class="card-desc">Pôle technique — infrastructure réseau, Docker, documentation</div>
+      </div>
+    </div>
+
+    <!-- LEGENDE -->
+    <div class="legende">
+      <div class="legende-title">Légende des pôles</div>
+      <div class="legende-grid">
+        <div class="legende-item">
+          <div class="legende-dot" style="background:var(--dir-border)"></div>
+          <span><strong>Direction</strong> — Pilotage stratégique et financier</span>
+        </div>
+        <div class="legende-item">
+          <div class="legende-dot" style="background:var(--tech-border)"></div>
+          <span><strong>Technique</strong> — Infrastructure et infogérance</span>
+        </div>
+        <div class="legende-item">
+          <div class="legende-dot" style="background:var(--mkt-border)"></div>
+          <span><strong>Marketing</strong> — Communication et commercial</span>
+        </div>
+        <div class="legende-item">
+          <div class="legende-dot" style="background:var(--algo-border)"></div>
+          <span><strong>Algorithmes</strong> — Développement et optimisation</span>
+        </div>
+        <div class="legende-item">
+          <div class="legende-dot" style="background:var(--support-border)"></div>
+          <span><strong>Support dir.</strong> — Assistance de direction</span>
+        </div>
+        <div class="legende-item">
+          <div class="legende-dot" style="background:var(--stage-border)"></div>
+          <span><strong>Moi — BTS SIO SISR</strong> — Stagiaire pôle technique</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    POWERiti — MSP &amp; Services d'infogérance &nbsp;·&nbsp; Documentation interne
+  </footer>
+
+</body>
+</html>
