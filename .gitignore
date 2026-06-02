@@ -1,3 +1,5 @@
-ssl/ssl.key
+*.key
+*.ext
+ca.crt
 *.log
 .env
