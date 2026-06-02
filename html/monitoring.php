@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Europe/Paris');
 // Uptime du serveur
 $uptime = shell_exec('uptime -p');
 
@@ -308,6 +309,7 @@ $cpu_charge = round($cpu[0] * 100);
   <a href="monitoring.php" class="active">Monitoring</a>
   <a href="index.php">PHP Info</a>
   <a href="db.php">Base de données</a>
+  <a href="http://poweriti.local:8080">phpMyAdmin</a>
 </nav>
 
 <div class="page-header">
