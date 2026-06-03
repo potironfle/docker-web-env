@@ -307,6 +307,7 @@ $cpu_charge = round($cpu[0] * 100);
   <a href="index.html">Réseau</a>
   <a href="equipe.html">Équipe</a>
   <a href="monitoring.php" class="active">Monitoring</a>
+  <a href="contact.php">Contact</a>
   <a href="index.php">PHP Info</a>
   <a href="db.php">Base de données</a>
   <a href="http://poweriti.local:8080">phpMyAdmin</a>
@@ -424,7 +425,7 @@ $cpu_charge = round($cpu[0] * 100);
 </main>
 
 <footer>
-  <span class="footer-text">POWERiti — Monitoring interne · Usage confidentiel</span>
+  <span class="footer-text">POWERiti — Monitoring interne</span>
   <div class="stack">
     <span>Nginx</span>
     <span>PHP-FPM</span>
