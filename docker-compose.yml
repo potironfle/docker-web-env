@@ -12,6 +12,7 @@ services:
     volumes:
       - ./html:/usr/share/nginx/html
       - ./ssl:/etc/nginx/ssl
+      - nginx-logs:/tmp
     networks:
       - web-network
     depends_on:
@@ -24,6 +25,7 @@ services:
       dockerfile: Dockerfile-php
     volumes:
       - ./html:/var/www/html
+      - nginx-logs:/tmp
     networks:
       - web-network
     depends_on:
@@ -31,6 +33,8 @@ services:
 
   mariadb:
     image: mariadb:latest
+    ports:
+      - '3306:3306'
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: monsite
@@ -52,6 +56,18 @@ services:
     depends_on:
       - mariadb
 
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - '0.0.0.0:8081:8080'
+    volumes:
+      - /:/rootfs:roS
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    restart: unless-stopped
+
 
 networks:
   web-network:
@@ -59,3 +75,4 @@ networks:
 
 volumes:
   db-data:
+  nginx-logs:

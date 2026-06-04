@@ -310,6 +310,7 @@ $messages = $pdo->query('SELECT * FROM contacts ORDER BY date_envoi DESC')->fetc
   <a href="equipe.html">Équipe</a>
   <a href="monitoring.php">Monitoring</a>
   <a href="contact.php" class="active">Contact</a>
+  <a href="logs.php">Logs</a>
   <a href="index.php">PHP Info</a>
   <a href="db.php">Base de données</a>
   <a href="http://poweriti.local:8080">phpMyAdmin</a>

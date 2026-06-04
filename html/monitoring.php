@@ -308,6 +308,7 @@ $cpu_charge = round($cpu[0] * 100);
   <a href="equipe.html">Équipe</a>
   <a href="monitoring.php" class="active">Monitoring</a>
   <a href="contact.php">Contact</a>
+  <a href="logs.php">Logs</a>
   <a href="index.php">PHP Info</a>
   <a href="db.php">Base de données</a>
   <a href="http://poweriti.local:8080">phpMyAdmin</a>
